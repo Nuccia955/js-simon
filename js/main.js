@@ -8,6 +8,10 @@ const timer = document.querySelector('.timer > span')
 const numbers = document.querySelector('.numbers');
 const numbersList = document.createElement('div');
 numbersList.classList.add('main-font-size', 'd-flex', 'justify-content-center');
+const userGuessed = document.createElement('div')
+userGuessed.classList.add('text-center', 'mt-4');
+
+// add random numbers list
 const arrayNumbers = genNumberList(5);
 console.log(arrayNumbers);
 numbersList.append(`${arrayNumbers.join(' - ')}`)
@@ -15,17 +19,6 @@ numbers.append(numbersList);
 
 //set timer
 let count = 5
-const time = document.createElement('span');
-timer.append(time);
-const result = setTimeout(() => {
-    const userAttempt= getUserAttempt(5);
-    console.log(userAttempt);
-    if (userAttempt.toString() === arrayNumbers.toString()) {
-        console.log('hai indovinato');
-    } else {
-        console.log('non hai indovinato');
-    };
-}, 6500);
 const countdown = setInterval(() => {
     if (count !== 0) {
         time.innerText = count;
@@ -37,14 +30,27 @@ const countdown = setInterval(() => {
     }
 }, 1000);
 
-
-
-
-
-
-
-
-
+//ask user numbers an show result
+const time = document.createElement('span');
+timer.append(time);
+const result = setTimeout(() => {
+    const userAttempt= getUserAttempt(5);
+    console.log(userAttempt);
+    numbers.append(userGuessed);
+    const guessedNumbers = userAttempt.filter(el => arrayNumbers.includes(el) );
+    if (guessedNumbers.length === arrayNumbers.length) {
+        userGuessed.append(`Conratulazioni! Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}!`);
+    } else {
+        if (userGuessed.length === 1) {
+        userGuessed.append(`Hai indovinato ${guessedNumbers.length} numero su ${arrayNumbers.length}! Il numero che hai indovinato è ${guessedNumbers.join(' - ')}`);
+        } else if (userGuessed.length > 1) {
+            userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}! I numeri che hai indovinato sono ${guessedNumbers.join(' - ')}`);
+        } else {
+            userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}!`);
+        }
+    }
+    
+}, 6500);
 
 /*********
  FUNCTIONS
