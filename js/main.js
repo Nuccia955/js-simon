@@ -4,6 +4,7 @@ Dopo 30 secondi i numeri in pagina devono essere rimossi e l’utente deve inser
 Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati. */
 
 //refs
+const timer = document.querySelector('.timer > span')
 const numbers = document.querySelector('.numbers');
 const numbersList = document.createElement('div');
 numbersList.classList.add('main-font-size', 'd-flex', 'justify-content-center');
@@ -11,7 +12,18 @@ numbersList.append(genNumberList(5))
 numbers.append(numbersList);
 
 //set timer
-
+let count = 5
+const time = document.createElement('span');
+timer.append(time);
+const countdown = setInterval(() => {
+    if (count !== 0) {
+        time.innerText = count;
+        count--;
+    } else {
+        time.innerText = count;
+        clearInterval(time);
+    }
+}, 1000)
 
 
 
