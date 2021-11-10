@@ -8,13 +8,24 @@ const timer = document.querySelector('.timer > span')
 const numbers = document.querySelector('.numbers');
 const numbersList = document.createElement('div');
 numbersList.classList.add('main-font-size', 'd-flex', 'justify-content-center');
-numbersList.append(genNumberList(5))
+const arrayNumbers = genNumberList(5);
+console.log(arrayNumbers);
+numbersList.append(`${arrayNumbers.join(' - ')}`)
 numbers.append(numbersList);
 
 //set timer
 let count = 5
 const time = document.createElement('span');
 timer.append(time);
+const result = setTimeout(() => {
+    const userAttempt= getUserAttempt(5);
+    console.log(userAttempt);
+    if (userAttempt.toString() === arrayNumbers.toString()) {
+        console.log('hai indovinato');
+    } else {
+        console.log('non hai indovinato');
+    };
+}, 6500);
 const countdown = setInterval(() => {
     if (count !== 0) {
         time.innerText = count;
@@ -22,8 +33,11 @@ const countdown = setInterval(() => {
     } else {
         time.innerText = count;
         clearInterval(time);
+        numbersList.innerText = '';
     }
-}, 1000)
+}, 1000);
+
+
 
 
 
@@ -46,10 +60,17 @@ function genRandNum (min, max) {
  * @returns 
  */
 function genNumberList (numEl) {
-    let list = '';
-    for(let i = 1; i < numEl; i++ ) {
-        list += ` ${genRandNum(1, 100)} -`;
+    let list = [];
+    for(let i = 1; i <= numEl; i++ ) {
+        list.push(genRandNum(1, 100));
     }
-    list += genRandNum(1, 100);
     return list;
+}
+
+function getUserAttempt (listLength) {
+    const userAttempt = [];
+    for(let i = 1; i <= listLength; i++) {
+        userAttempt.push(parseInt(prompt('Inserisci un numero alla volta di quelli che hai visto')));
+    }
+    return userAttempt;
 }
