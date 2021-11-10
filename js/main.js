@@ -8,7 +8,8 @@ const timer = document.querySelector('.timer > span')
 const numbers = document.querySelector('.numbers');
 const numbersList = document.createElement('div');
 numbersList.classList.add('main-font-size', 'd-flex', 'justify-content-center');
-const userGuessed = document.createElement('div')
+const userGuessed = document.createElement('div');
+userGuessed.classList.add('fs-1')
 userGuessed.classList.add('text-center', 'mt-4');
 
 // add random numbers list
@@ -25,8 +26,8 @@ const countdown = setInterval(() => {
         count--;
     } else {
         time.innerText = count;
+        numbersList.classList.add('d-none');
         clearInterval(time);
-        numbersList.innerText = '';
     }
 }, 1000);
 
@@ -38,18 +39,16 @@ const result = setTimeout(() => {
     console.log(userAttempt);
     numbers.append(userGuessed);
     const guessedNumbers = userAttempt.filter(el => arrayNumbers.includes(el) );
+    console.log(guessedNumbers);
     if (guessedNumbers.length === arrayNumbers.length) {
         userGuessed.append(`Conratulazioni! Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}!`);
-    } else {
-        if (userGuessed.length === 1) {
-        userGuessed.append(`Hai indovinato ${guessedNumbers.length} numero su ${arrayNumbers.length}! Il numero che hai indovinato è ${guessedNumbers.join(' - ')}`);
-        } else if (userGuessed.length > 1) {
-            userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}! I numeri che hai indovinato sono ${guessedNumbers.join(' - ')}`);
-        } else {
-            userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}!`);
-        }
+    } else if (guessedNumbers.length < arrayNumbers.length && guessedNumbers.length > 1) {
+        userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}! I numeri che hai indovinato sono ${guessedNumbers.join(' - ')}`);
+    } else if (guessedNumbers.length === 1) {
+        userGuessed.append(`Hai indovinato ${guessedNumbers.length} numero su ${arrayNumbers.length}! Il numero che hai indovinato è ${guessedNumbers.toString()}`);
+    } else if (guessedNumbers.length === 0) {
+        userGuessed.append(`Hai indovinato ${guessedNumbers.length} numeri su ${arrayNumbers.length}!`);
     }
-    
 }, 6500);
 
 /*********
